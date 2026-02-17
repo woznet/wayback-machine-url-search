@@ -3,9 +3,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "vitest run"
+    "test": "vitest run",
+    "build": "npm run test && npm run pack",
+    "pack": "node scripts/package-extension.js"
   },
   "devDependencies": {
+    "archiver": "^7.0.0",
     "vitest": "^3.0.0"
   }
 }

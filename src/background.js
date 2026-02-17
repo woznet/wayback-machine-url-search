@@ -1,29 +1,4 @@
 import { isUrl, buildWaybackUrl } from './url-utils.js';
-import { getSettings } from './settings.js';
-
-// Apply popup setting
-async function applyPopupSetting() {
-  const settings = await getSettings();
-  if (settings.popupEnabled) {
-    chrome.action.setPopup({ popup: 'popup.html' });
-  } else {
-    chrome.action.setPopup({ popup: '' });
-  }
-}
-
-// Apply popup setting on service worker startup
-applyPopupSetting();
-
-// Listen for settings changes
-chrome.storage.onChanged.addListener((changes, area) => {
-  if (area === 'sync' && changes.popupEnabled) {
-    if (changes.popupEnabled.newValue) {
-      chrome.action.setPopup({ popup: 'popup.html' });
-    } else {
-      chrome.action.setPopup({ popup: '' });
-    }
-  }
-});
 
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
@@ -33,6 +8,7 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 });
 
+// Handle context menu clicks
 chrome.contextMenus.onClicked.addListener((info, tab) => {
   if (info.menuItemId === "search-wayback-machine") {
     let waybackUrl = "";
@@ -46,5 +22,15 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
       chrome.tabs.create({ url: waybackUrl, index: newIndex, openerTabId: tab.id })
         .catch((error) => console.error('Failed to create tab:', error));
     }
+  }
+});
+
+// Handle extension icon click - direct search without popup
+chrome.action.onClicked.addListener(async (tab) => {
+  const waybackUrl = buildWaybackUrl(tab.url);
+  if (waybackUrl) {
+    const newIndex = tab.index + 1;
+    chrome.tabs.create({ url: waybackUrl, index: newIndex, openerTabId: tab.id })
+      .catch((error) => console.error('Failed to create tab:', error));
   }
 });
