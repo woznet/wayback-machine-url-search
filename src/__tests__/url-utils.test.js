@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { isUrl } from '../url-utils.js';
+import { isUrl, buildWaybackUrl } from '../url-utils.js';
 
 describe('isUrl', () => {
   it('should accept valid http/https URLs', () => {
@@ -49,5 +49,17 @@ describe('isUrl', () => {
     expect(isUrl('https://')).toBe(false);
     expect(isUrl('://')).toBe(false);
     expect(isUrl('http://.')).toBe(false);
+  });
+});
+
+describe('buildWaybackUrl', () => {
+  it('should build a valid Wayback Machine URL', () => {
+    expect(buildWaybackUrl('https://example.com')).toBe('https://web.archive.org/web/*/https://example.com');
+  });
+
+  it('should return empty string for falsy input', () => {
+    expect(buildWaybackUrl('')).toBe('');
+    expect(buildWaybackUrl(null)).toBe('');
+    expect(buildWaybackUrl(undefined)).toBe('');
   });
 });

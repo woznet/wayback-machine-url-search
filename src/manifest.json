@@ -2,10 +2,20 @@
 	"manifest_version": 3,
 	"version": "2.0",
 	"name": "Wayback Machine URL Search",
-  "description": "Search the Internet Archive Wayback Machine for a URL or hyperlink",
+	"description": "Search the Internet Archive Wayback Machine for a URL or hyperlink",
 	"background": {
 		"service_worker": "background.js",
 		"type": "module"
+	},
+	"action": {
+		"default_popup": "popup.html",
+		"default_title": "Search this page on the Wayback Machine",
+		"default_icon": {
+			"16": "icons/favicon16.png",
+			"32": "icons/favicon32.png",
+			"48": "icons/icon48.png",
+			"128": "icons/icon128.png"
+		}
 	},
 	"permissions": [
 		"contextMenus",

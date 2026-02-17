@@ -48,3 +48,8 @@ export function isUrl(str) {
     return false;
   }
 }
+
+export function buildWaybackUrl(url) {
+  if (!url) return '';
+  return 'https://web.archive.org/web/*/' + url;
+}

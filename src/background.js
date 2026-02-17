@@ -1,4 +1,4 @@
-import { isUrl } from './url-utils.js';
+import { isUrl, buildWaybackUrl } from './url-utils.js';
 
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
@@ -12,9 +12,9 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
   if (info.menuItemId === "search-wayback-machine") {
     let waybackUrl = "";
     if (info.linkUrl) {
-      waybackUrl = "https://web.archive.org/web/*/" + info.linkUrl;
+      waybackUrl = buildWaybackUrl(info.linkUrl);
     } else if (info.selectionText && isUrl(info.selectionText.trim())) {
-      waybackUrl = "https://web.archive.org/web/*/" + encodeURIComponent(info.selectionText.trim());
+      waybackUrl = buildWaybackUrl(encodeURIComponent(info.selectionText.trim()));
     }
     if (waybackUrl) {
       const newIndex = tab.index + 1;
