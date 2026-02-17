@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="options.css">
+  <title>Wayback Machine URL Search — Settings</title>
+</head>
+<body>
+  <div class="options-container">
+    <div class="header">
+      <img src="icons/icon48.png" alt="Wayback Machine URL Search" class="logo">
+      <h1>Wayback Machine URL Search</h1>
+      <p class="subtitle">Settings</p>
+    </div>
+    <div class="setting">
+      <label class="toggle-label" for="popup-toggle">
+        <span class="setting-text">
+          <span class="setting-name">Enable Popup</span>
+          <span class="setting-description">Show a popup when clicking the toolbar icon to search the current page on the Wayback Machine.</span>
+        </span>
+        <div class="toggle-switch">
+          <input type="checkbox" id="popup-toggle" checked>
+          <span class="slider"></span>
+        </div>
+      </label>
+    </div>
+    <p id="save-status" class="save-status"></p>
+  </div>
+  <script type="module" src="options.js"></script>
+</body>
+</html>

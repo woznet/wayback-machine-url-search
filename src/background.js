@@ -1,4 +1,29 @@
 import { isUrl, buildWaybackUrl } from './url-utils.js';
+import { getSettings } from './settings.js';
+
+// Apply popup setting
+async function applyPopupSetting() {
+  const settings = await getSettings();
+  if (settings.popupEnabled) {
+    chrome.action.setPopup({ popup: 'popup.html' });
+  } else {
+    chrome.action.setPopup({ popup: '' });
+  }
+}
+
+// Apply popup setting on service worker startup
+applyPopupSetting();
+
+// Listen for settings changes
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area === 'sync' && changes.popupEnabled) {
+    if (changes.popupEnabled.newValue) {
+      chrome.action.setPopup({ popup: 'popup.html' });
+    } else {
+      chrome.action.setPopup({ popup: '' });
+    }
+  }
+});
 
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
